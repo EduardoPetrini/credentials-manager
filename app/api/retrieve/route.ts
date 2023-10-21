@@ -1,11 +1,16 @@
 import { getDbClient } from '@/lib/database';
 
-export default async function POST(req: Request) {
-  const {domain} = await req.json();
+export async function POST(req: Request) {
+  const { domain } = await req.json();
   const connection = await getDbClient();
 
-  const credentials = connection.collection('credentials').find({domain}).toArray();
+  const reg = new RegExp(`.*${domain}.*`);
+  console.log('search', domain, reg);
 
-  return credentials;
+  const credentials = await connection
+    .collection('credentials')
+    .find({ domain: { $regex: reg } })
+    .toArray();
+  console.log('found', credentials);
+  return new Response(JSON.stringify(credentials));
 }
-  
