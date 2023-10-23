@@ -11,6 +11,8 @@ declare module 'next-auth/jwt' {
   }
 }
 
+const { BASE_URL = 'http://localhost:3000' } = process.env;
+
 export const config = {
   theme: {
     logo: 'https://next-auth.js.org/img/logo/logo-sm.png',
@@ -26,7 +28,7 @@ export const config = {
       },
       async authorize(credentials, req) {
         try {
-          const res = await fetch('http://localhost:3000/api/login', {
+          const res = await fetch(`${BASE_URL}/api/login`, {
             method: 'POST',
             body: JSON.stringify(credentials),
             headers: { 'Content-Type': 'application/json' },
