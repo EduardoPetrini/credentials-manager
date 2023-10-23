@@ -25,8 +25,6 @@ export const config = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
-        console.log('fetching login...');
-        console.log(credentials)
         try {
           const res = await fetch('http://localhost:3000/api/login', {
             method: 'POST',
@@ -51,11 +49,11 @@ export const config = {
   callbacks: {
     async jwt({ token }) {
       console.log('jwt', token);
-      token.userRole = 'admin';
+      // token.userRole = 'admin';
       return token;
     },
     async signIn({ user, account, profile, email, credentials }) {
-      console.log('sign in callback', user);
+      // console.log('sign in callback', user);
       return true;
     },
     async redirect({ url, baseUrl }) {
@@ -63,7 +61,7 @@ export const config = {
       return baseUrl;
     },
     async session({ session, user, token }) {
-      console.log('session in callback', session);
+      // console.log('session in callback', session);
       return session;
     },
   },
