@@ -54,7 +54,7 @@ export default function Registry() {
     setPassword(text);
   };
   return (
-    <div className="w-full p-24">
+    <div className="w-full p-5 md:p-24">
       <button onClick={() => setOpen(true)} className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
         Registry new Credential
       </button>
@@ -87,7 +87,7 @@ export default function Registry() {
                 />
               </div>
               <br />
-              <div className="flex">
+              <div className="lg:flex">
                 <label htmlFor="domain" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
                 <button
                   onClick={e => {
