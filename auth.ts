@@ -50,7 +50,6 @@ export const config = {
   ],
   callbacks: {
     async jwt({ token }) {
-      console.log('jwt', token);
       // token.userRole = 'admin';
       return token;
     },
