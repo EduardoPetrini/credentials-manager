@@ -2,9 +2,11 @@
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Registry from './registry';
 import Retrieve from './retrieve';
+import Login from './login';
 
 export default function Main() {
   const { data: session, status } = useSession();
+  console.log(status);
   return (
     <main className="flex min-h-screen flex-col items-center w-1/2">
       {session ? (
@@ -14,18 +16,7 @@ export default function Main() {
           <Retrieve />
         </>
       ) : (
-        <>
-          <span>You are not signed in</span>
-          <a
-            href={`/api/auth/signin`}
-            onClick={e => {
-              e.preventDefault();
-              signIn();
-            }}
-          >
-            Sign in
-          </a>
-        </>
+        <Login />
       )}
     </main>
   );
