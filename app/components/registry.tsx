@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { IconCopy } from './ui/icons';
+import { IconCopy, IconEye } from './ui/icons';
 export default function Registry() {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -7,6 +7,7 @@ export default function Registry() {
   const [domain, setDomain] = useState('');
   const [login, setLogin] = useState('');
   const [disableSave, setDisableSave] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (password && domain) {
@@ -61,7 +62,7 @@ export default function Registry() {
 
       {open ? (
         <div>
-          <form>
+          <form autoComplete="off">
             <div className="grid mb-6">
               <div>
                 <label htmlFor="domain" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
@@ -80,6 +81,8 @@ export default function Registry() {
                 <input
                   type="text"
                   name="login"
+                  autoComplete="off"
+                  aria-autocomplete="none"
                   placeholder="login details (optional)"
                   onChange={e => setLogin(e.target.value)}
                   value={login}
@@ -87,19 +90,50 @@ export default function Registry() {
                 />
               </div>
               <br />
-              <div className="lg:flex">
-                <label htmlFor="domain" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-                <button
-                  onClick={e => {
-                    e.preventDefault();
-                    generatePassword();
-                  }}
-                  className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                >
-                  Generate Password
-                </button>
-                {password ? <span className="border border-gray-300 text-gray-900 text-sm rounded-lg p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white  mr-2 mb-2">{password}</span> : null}
-                {password ? (
+              <div className="">
+                <div className="flex justify-between">
+                  <button
+                    onClick={e => {
+                      e.preventDefault();
+                      generatePassword();
+                    }}
+                    className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                  >
+                    Generate Password
+                  </button>
+                  {copied ? <small className="p-2 mr-2 mb-2 text-green-700">copied!</small> : null}
+                </div>
+                <div className="flex gap-2">
+                  {showPassword ? (
+                    <input
+                      type="text"
+                      name="password"
+                      placeholder="Password"
+                      onChange={e => setPassword(e.target.value)}
+                      value={password}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                  ) : (
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      onChange={e => setPassword(e.target.value)}
+                      value={password}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                  )}
+                  <button
+                    className="mr-2 mb-2"
+                    onClick={e => {
+                      e.preventDefault();
+                      setShowPassword(true);
+                      setTimeout(() => setShowPassword(false), 3000);
+                    }}
+                  >
+                    <IconEye />
+                  </button>
+
                   <button
                     className="mr-2 mb-2"
                     onClick={e => {
@@ -113,8 +147,7 @@ export default function Registry() {
                   >
                     <IconCopy />
                   </button>
-                ) : null}
-                {copied ? <small className="p-2 mr-2 mb-2 text-green-700">copied!</small> : null}
+                </div>
               </div>
             </div>
           </form>
