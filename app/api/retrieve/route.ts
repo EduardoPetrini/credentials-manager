@@ -1,15 +1,19 @@
 import { getDbClient } from '@/lib/database';
 
 export async function POST(req: Request) {
-  const { domain } = await req.json();
+  const { domain, session } = await req.json();
+  if (!session) {
+    throw new Error('Session is required');
+  }
+
   const connection = await getDbClient();
 
+  const { id: userKey } = session;
   const reg = new RegExp(`.*${domain}.*`);
-  console.log('search', domain, reg);
 
   const credentials = await connection
     .collection('credentials')
-    .find({ domain: { $regex: reg } })
+    .find({ userKey, domain: { $regex: reg } })
     .toArray();
   console.log('found', credentials);
   return new Response(JSON.stringify(credentials));

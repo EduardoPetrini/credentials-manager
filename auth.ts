@@ -62,8 +62,8 @@ export const config = {
       return baseUrl;
     },
     async session({ session, user, token }) {
-      // console.log('session in callback', session);
-      return session;
+      // console.log('session in callback', { session, id: token.sub });
+      return { ...session, id: token.sub };
     },
   },
 } satisfies NextAuthConfig;

@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import List from './list';
+import { useSession } from 'next-auth/react';
 export default function Retrieve() {
   const [domain, setDomain] = useState('');
   const [empty, setEmpty] = useState(false);
   const [credentials, setCredentials] = useState<CredentialType[]>([]);
+  const { data: session } = useSession();
 
   const handleRetrieve = async () => {
     if (!domain) {
@@ -17,7 +19,7 @@ export default function Retrieve() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ domain }),
+      body: JSON.stringify({session,  domain }),
     });
 
     const json = await response.json();

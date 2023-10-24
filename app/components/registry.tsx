@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { IconCopy, IconEye } from './ui/icons';
+import { useSession } from 'next-auth/react';
 export default function Registry() {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -8,6 +9,7 @@ export default function Registry() {
   const [login, setLogin] = useState('');
   const [disableSave, setDisableSave] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (password && domain) {
@@ -28,7 +30,7 @@ export default function Registry() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ domain, password, login }),
+      body: JSON.stringify({ domain, password, login, session: session}),
     });
 
     await response.text();
