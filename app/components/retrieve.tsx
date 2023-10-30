@@ -28,7 +28,7 @@ export default function Retrieve() {
   };
 
   return (
-    <div className="w-full p-5 md:p-24">
+    <div className="w-full md:p-24 p-10">
       <form className="lg:grid lg:grid-cols-4">
         <div className="mr-2 mb-2 lg:col-span-3">
           <label htmlFor="domain" className="text-sm font-medium text-gray-900 dark:text-white"></label>
