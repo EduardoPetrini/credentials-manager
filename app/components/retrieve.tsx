@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
 import List from './list';
 import { useSession } from 'next-auth/react';
-export default function Retrieve() {
+
+declare type RegistryProps = {
+  setLoad: (load: boolean) => void;
+};
+export default function Retrieve({ setLoad }: RegistryProps) {
   const [domain, setDomain] = useState('');
   const [empty, setEmpty] = useState(false);
   const [credentials, setCredentials] = useState<CredentialType[]>([]);
   const { data: session } = useSession();
 
   const handleRetrieve = async () => {
+    setLoad(true);
     if (!domain) {
       setEmpty(true);
       setTimeout(() => setEmpty(false), 2000);
@@ -25,6 +30,7 @@ export default function Retrieve() {
     const json = await response.json();
     console.log(json);
     setCredentials(json);
+    setLoad(false);
   };
 
   return (
