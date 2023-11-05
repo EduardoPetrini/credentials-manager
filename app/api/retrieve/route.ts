@@ -15,6 +15,6 @@ export async function POST(req: Request) {
     .collection('credentials')
     .find({ userKey, domain: { $regex: reg } })
     .toArray();
-  console.log('found', credentials);
+  console.log('found', credentials.length);
   return new Response(JSON.stringify(credentials));
 }

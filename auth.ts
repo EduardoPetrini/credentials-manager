@@ -35,7 +35,6 @@ export const config = {
           });
           console.log('login results');
           const user = await res.json();
-          console.log(user);
 
           if (res.ok && user) {
             return user;
