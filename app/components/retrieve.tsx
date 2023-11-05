@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 declare type RegistryProps = {
   setLoad: (load: boolean) => void;
 };
+
 export default function Retrieve({ setLoad }: RegistryProps) {
   const [domain, setDomain] = useState('');
   const [empty, setEmpty] = useState(false);
@@ -24,13 +25,36 @@ export default function Retrieve({ setLoad }: RegistryProps) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({session,  domain }),
+      body: JSON.stringify({ session, domain }),
     });
 
     const json = await response.json();
     console.log(json);
     setCredentials(json);
     setLoad(false);
+  };
+
+  const handleDelete = async (credId: string) => {
+    setLoad(true);
+    const response = await fetch('/api/delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ session, credId }),
+    });
+
+    const json = await response.text();
+    console.log(json);
+    setLoad(false)
+
+    if (!response.ok) {
+      console.log('Error to delete', credId);
+      console.log(json);
+      return;
+    }
+
+    await handleRetrieve();
   };
 
   return (
@@ -60,7 +84,7 @@ export default function Retrieve({ setLoad }: RegistryProps) {
       </form>
       {credentials.length > 0 ? (
         <>
-          <List credentials={credentials} />
+          <List credentials={credentials} handleDelete={handleDelete}/>
           <button
             onClick={e => {
               e.preventDefault();

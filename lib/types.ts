@@ -6,6 +6,7 @@ declare type PasswordGenerate = {
 };
 
 declare type CredentialType = {
+  _id?: string;
   domain: string;
   login: string;
   password: string;
