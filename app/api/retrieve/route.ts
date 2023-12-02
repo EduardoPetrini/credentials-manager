@@ -1,3 +1,4 @@
+import { decrypt } from '@/lib/cryptoer';
 import { getDbClient } from '@/lib/database';
 
 export async function POST(req: Request) {
@@ -16,5 +17,10 @@ export async function POST(req: Request) {
     .find({ userKey, domain: { $regex: reg } })
     .toArray();
   console.log('found', credentials.length);
-  return new Response(JSON.stringify(credentials));
+
+  const decrypted = credentials.map((cred) => ({
+    ...cred,
+    password: decrypt(cred.password)
+  }))
+  return new Response(JSON.stringify(decrypted));
 }

@@ -14,10 +14,6 @@ export default function List({ credentials, handleDelete }: ListProps) {
     handleDelete(credId);
   };
 
-  const getDecrypted = (encrypted: string) => {
-    return decrypt(encrypted)
-  }
-
   return (
     <div className="mb-2">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -57,9 +53,8 @@ export default function List({ credentials, handleDelete }: ListProps) {
                   onClick={e => {
                     e.preventDefault();
                     const target = e.currentTarget;
-                    const decrypted = getDecrypted(cred.password);
-                    target.innerHTML = `${decrypted} <small style="color: green;">copied!</small>`;
-                    navigator.clipboard.writeText(decrypted);
+                    target.innerHTML = `${cred.password} <small style="color: green;">copied!</small>`;
+                    navigator.clipboard.writeText(cred.password);
 
                     setTimeout(() => (target.innerText = '***'), 2000);
                   }}
