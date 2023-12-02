@@ -11,9 +11,10 @@ declare module 'next-auth/jwt' {
   }
 }
 
-const { BASE_URL = 'http://localhost:3000' } = process.env;
+const { BASE_URL = 'http://localhost:3000', AUTH_SECRET = '123'} = process.env;
 
 export const config = {
+  secret: AUTH_SECRET,
   theme: {
     logo: 'https://next-auth.js.org/img/logo/logo-sm.png',
   },
