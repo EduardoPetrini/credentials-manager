@@ -1,3 +1,4 @@
+import { decrypt } from '@/lib/cryptoer';
 import { IconEdit, IconEye, IconRemove } from './ui/icons';
 declare type ListProps = {
   credentials: CredentialType[];
@@ -12,6 +13,10 @@ export default function List({ credentials, handleDelete }: ListProps) {
     console.log(credId);
     handleDelete(credId);
   };
+
+  const getDecrypted = (encrypted: string) => {
+    return decrypt(encrypted)
+  }
 
   return (
     <div className="mb-2">
@@ -52,8 +57,9 @@ export default function List({ credentials, handleDelete }: ListProps) {
                   onClick={e => {
                     e.preventDefault();
                     const target = e.currentTarget;
-                    target.innerHTML = `${cred.password} <small style="color: green;">copied!</small>`;
-                    navigator.clipboard.writeText(cred.password);
+                    const decrypted = getDecrypted(cred.password);
+                    target.innerHTML = `${decrypted} <small style="color: green;">copied!</small>`;
+                    navigator.clipboard.writeText(decrypted);
 
                     setTimeout(() => (target.innerText = '***'), 2000);
                   }}
