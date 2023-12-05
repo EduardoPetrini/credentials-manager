@@ -17,6 +17,7 @@ export default function Retrieve({ setLoad }: RegistryProps) {
     if (!domain) {
       setEmpty(true);
       setTimeout(() => setEmpty(false), 2000);
+      setLoad(false);
       return;
     }
 
