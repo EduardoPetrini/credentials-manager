@@ -13,13 +13,13 @@ export default function Retrieve({ setLoad }: RegistryProps) {
   const { data: session } = useSession();
 
   const handleRetrieve = async () => {
-    setLoad(true);
     if (!domain) {
       setEmpty(true);
       setTimeout(() => setEmpty(false), 2000);
-      setLoad(false);
       return;
     }
+    
+    setLoad(true);
 
     const response = await fetch('/api/retrieve', {
       method: 'POST',
