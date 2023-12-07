@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   const connection = await getDbClient();
 
   const { id: userKey } = session;
-  const reg = new RegExp(`.*${domain}.*`);
+  const reg = new RegExp(`.*${domain}.*`, 'i');
 
   const credentials = await connection
     .collection('credentials')
