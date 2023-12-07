@@ -26,7 +26,7 @@ export default function Retrieve({ setLoad }: RegistryProps) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ session, domain }),
+      body: JSON.stringify({ session, domain: domain.trim() }),
     });
 
     const json = await response.json();
