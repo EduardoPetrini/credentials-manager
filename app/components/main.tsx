@@ -19,7 +19,7 @@ export default function Main() {
     }
   }, [status]);
   return (
-    <main className="align-top lg:flex sm:block">
+    <main className="align-top lg:flex">
       {session ? (
         <>
           <Registry setLoad={setLoad}/>
