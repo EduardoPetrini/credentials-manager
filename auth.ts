@@ -78,7 +78,7 @@ export function auth(...args: [GetServerSidePropsContext['req'], GetServerSidePr
 declare global {
   namespace NodeJS {
     export interface ProcessEnv {
-      NEXTAUTH_SECRET: string | undefined;
+      NEXTAUTH_SECRET?: string;
     }
   }
 }
